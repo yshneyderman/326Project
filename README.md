@@ -19,3 +19,6 @@ Our project will use Data Storage (to store music),
 
 [Yefim Shneyderman](/team/Yefim.md)
 
+[Yefim Shneyderman 2](/team/Bruce.md)
+
+[Yefim Shneyderman 3](/team/Marco.md)
