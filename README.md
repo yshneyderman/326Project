@@ -10,6 +10,7 @@ MusicStar
 Sonata
 SonataShare
 AllegroBro
+TuneRater
 
 A website where aspiring musicians can upload their music and other users can provide critiques and suggestions for how they can improve.
 
