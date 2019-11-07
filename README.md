@@ -5,7 +5,6 @@ Team 24 Project
 Name Ideas:
 RateMyTunes
 TuneTrade
-Jammin
 MusicStar
 Sonata
 SonataShare
