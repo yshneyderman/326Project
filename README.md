@@ -22,3 +22,5 @@ Our project will use Data Storage (to store music),
 [Bruce Waters](/team/Bruce.md)
 
 [Marco Hernandez-Muniz](/team/Marco.md)
+
+[Ryan West](/team/Ryan.md)
