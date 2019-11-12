@@ -1,17 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-   <meta charset="UTF-8">
-   <title>TuneRater</title>
-   <h1>Welcome to TuneRater</h1>   
-   <!--Let browser know website is optimized for mobile-->
-   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>TuneRater</title>
 
-   <link href="style.css" rel="stylesheet">
-   <script src="main.js" defer></script>
-</head>
-    
-<body>
-     
-</body>
+    <h1>Welcome to TuneRater</h1>   
+    <!--Let browser know website is optimized for mobile-->
+   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  </head>
+  <body>
+
+    <h2>Add React in One Minute</h2>
+    <p>This page demonstrates using React with no build tooling.</p>
+    <p>React is loaded as a script tag.</p>
+
+    <!-- We will put our React component inside this div. -->
+    <div id="like_button_container"></div>
+
+    <!-- Load React. -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+
+    <!-- Load our React component. -->
+    <link href="style.css" rel="stylesheet">
+    <script src="main.js" defer></script>
+  </body>
 </html>
