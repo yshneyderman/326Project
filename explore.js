@@ -13,6 +13,15 @@ var songs = {
     }
   };
 
+    var MongoClient = require('mongodb').MongoClient;
+    var url = "mongodb://localhost:27017/mydb";
+
+    MongoClient.connect(url, function(err, db) {
+        if (err) throw err;
+        console.log("Database created!");
+        db.close();
+    });
+
 
 document.getElementById("songs").style.display = "block";
 document.getElementById("songs").innerHTML = "<ul></ul>";
