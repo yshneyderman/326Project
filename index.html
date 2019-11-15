@@ -73,7 +73,20 @@
   <div style="padding:20px;margin-top:30px;background-color:#ffffff;height:1500px;">
     <h1>TuneRater Login Page</h1>
     <!-- hello.html -->
-
+    <div class="login">
+			<h1>Login</h1>
+			<form action="authenticate.php" method="post">
+				<label for="username">
+					<i class="fas fa-user"></i>
+				</label>
+				<input type="text" name="username" placeholder="Username" id="username" required>
+				<label for="password">
+					<i class="fas fa-lock"></i>
+				</label>
+				<input type="password" name="password" placeholder="Password" id="password" required>
+				<input type="submit" value="Login">
+			</form>
+		</div>
 
 
     <p>Some text some text some text some text..</p>
