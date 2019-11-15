@@ -14,7 +14,7 @@
 
     <!-- Load our React component. -->
     <link href="style.css" rel="stylesheet">
-    <script src="main.js" defer></script>
+    <script src="explore.js" defer></script>
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
@@ -69,21 +69,27 @@
     <li style="float:right"><a href="account.html"><i class="fa fa-user-circle" aria-hidden="true"></i>  Account</a></li>
   </ul>
 
-  <div style="padding:20px;margin-top:30px;background-color:#ffffff;height:1500px;">
+  <div style="padding:20px;margin-top:30px;background-color:#ffffff;">
     <h1>Explore New Songs</h1>
 
+    <style>
+        .container{
+          display:flex;
+        }
+        .fixed{
+          width: 15;
+        }
+        .flex-item{
+          flex-grow: 1;
+        }
+      </style>
+      
+
     <p>Here are some new songs!</p>
-    <div id="app">
-        {{ message }}
+    <div id="songs"></div>
+    
+    
     </div>
-    <audio controls="controls">
-      <source src="track.ogg" type="audio/ogg" />
-      <source src="track.mp3" type="audio/mpeg" />
-    Your browser does not support the audio element.
-    </audio>
-  </div>
-
-
 </body>
 
 </html>
