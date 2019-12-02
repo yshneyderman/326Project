@@ -27,6 +27,23 @@ let error = '';
 
 app.get("/", (req, res) => {
   Track.find((err, tracks) => {
+    console.log(tracks);
+    let view = { tracks , errormsg : error};
+    res.render('track', view);
+    error = '';
+  });
+});
+
+app.post("/upvote", (req, res) => {
+  let title = req.body.title;
+  Track.findOne({ title : title }, (err, tracks) => {
+    tracks.upvotes += 1;
+    tracks.save(function(err,tracks) {
+      //updated
+    });
+    error = '';
+  });
+  Track.find((err, tracks) => {
     let view = { tracks , errormsg : error};
     res.render('track', view);
     error = '';
@@ -119,7 +136,8 @@ app3.post("/create", (req, res) => {
       title: req.body.title,
       artist: req.body.artist,
       mp3: req.body.mp3,
-      duration: req.body.duration
+      duration: req.body.duration,
+      upvotes: 0
   });
 
   tra.save((err, tra) => {

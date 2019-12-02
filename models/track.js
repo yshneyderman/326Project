@@ -5,7 +5,10 @@ var Track = db.model("Track", {
     title:      String,
     artist:     String,
     mp3:        Buffer,
-    duration:   String
+    duration:   String,
+    upvotes:    Number,
+    comments:   [String],
+    accolades:  [String]
 });
 
 module.exports = Track;
