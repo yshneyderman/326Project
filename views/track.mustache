@@ -9,7 +9,70 @@
 
     <!-- Load our React component. -->
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <script src="../explore.js" defer></script>
+    <script>
+      let songStored;
+      let playButton;
+      let savedSong;
+      let title;
+
+      function playAudio(song) {
+        if(songStored != null){
+            
+            var playPromiseOut = songStored.pause();;
+
+            if (playPromiseOut !== undefined) {
+              playPromiseOut.then(_ => {
+                //success
+              })
+              .catch(error => {
+                //failure
+              });
+            }
+
+            playButton.innerHTML = "<i class='fa fa-play' aria-hidden='true' style='color: #ffffff' onclick='playAudio(\"" + savedSong + "\")'></i>";
+            title.style.setProperty("color", "#ffffff");
+        }
+        savedSong = song;
+        songStored = document.getElementById("audio_"+song); 
+        
+        var playPromise = songStored.play();;
+
+            if (playPromise !== undefined) {
+              playPromise.then(_ => {
+                //success
+              })
+              .catch(error => {
+                //failure
+              });
+            }
+        
+        playButton = document.getElementById("play_"+song);
+        playButton.innerHTML = "<i class='fa fa-pause' aria-hidden='true' style='color: #00bcd4' onclick='pauseAudio(\"" + song + "\")'></i>";
+        title = document.getElementById("title_"+song); 
+        title.style.setProperty("color", "#00bcd4");
+      } 
+
+      function pauseAudio(song) {
+        let songStoredAlt = document.getElementById("audio_"+song); 
+        
+        var playPromise = songStoredAlt.pause();;
+
+            if (playPromise !== undefined) {
+              playPromise.then(_ => {
+                //success
+              })
+              .catch(error => {
+                //failure
+              });
+            }
+
+        let playButtonAlt = document.getElementById("play_"+song);
+        playButtonAlt.innerHTML = "<i class='fa fa-play' aria-hidden='true' style='color: #ffffff' onclick='playAudio(\"" + song +"\")'></i>";
+        let titleAlt = document.getElementById("title_"+song); 
+        titleAlt.style.setProperty("color", "#ffffff");
+      }
+    
+    </script>
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
@@ -89,7 +152,7 @@
     <p>Here are some new songs!</p>
     <div id="songs"></div>
     {{#tracks}}
-    <div class='container' style='color:#ffffff;padding:3px;margin-top:4px;background-color:#353535;border: 1px solid#131313;'><audio id='audio_{{title}}'><source src='{{mp3}}'></audio><div class='fixed' id='div_{{title}}' style='padding:6px; margin-top:10px'><i class='fa fa-play' aria-hidden='true' onclick='playAudio("{{title}}")'></i></div><div class='flex-item' style='padding:6px'><div id='{artist_{title}}'>{{title}}</div><div style='color:rgb(173, 173, 173)'>{{artist}}</div></div><div class='flex-item' style='padding:15px' align='right'>{{duration}}</div></div>
+    <div class='container' style='color:#ffffff;padding:3px;margin-top:4px;background-color:#353535;border: 1px solid#131313;'><audio id='audio_{{title}}'><source src='{{mp3}}'></audio><div class='fixed' id='play_{{title}}' style='padding:6px; margin-top:10px'><i class='fa fa-play' aria-hidden='true' onclick='playAudio("{{title}}")'></i></div><div class='flex-item' style='padding:6px'><div id='title_{{title}}'>{{title}}</div><div id='artist_{{title}}' style='color:rgb(173, 173, 173)'>{{artist}}</div></div><div class='flex-item' style='padding:15px' align='right'>{{duration}}</div></div>
     {{/tracks}}
     </div>
   </div>
