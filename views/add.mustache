@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Required meta tags always come first -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>TuneRater - Explore</title>
+
+    <!-- Load our React component. -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="explore.js" defer></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+    <style>
+    body {margin:0;}
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #333;
+      position: fixed;
+      top: 0;
+      width: 100%;
+    }
+
+    li {
+      float: left;
+    }
+
+    li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 15px 30px;
+      text-decoration: none;
+    }
+
+    li a:hover:not(.active) {
+      background-color: #111;
+    }
+
+    .active {
+      background-color: #4CAF50;
+    }
+  </style>
+</head>
+
+<body>
+
+  <ul>
+    <li><a href="http://localhost:3001/"><img src="https://raw.githubusercontent.com/yshneyderman/326Project/master/TuneRater%20Logo%20Blue.png" height="15" width="30"></a></li>
+    <li><a href="http://localhost:3000/">Explore</a></li>
+    <li style="float:right"><a href="http://localhost:3002/"><i class="fa fa-plus" aria-hidden="true"></i>   Add Song</a></li>
+  </ul>
+  <div style="padding:20px;margin-top:30px;background-color:#ffffff;">  
+
+
+<h3 id="errormsg">{{errormsg}}</h3>
+
+<h3>Create Track</h3>
+<form method="post" action="/create">
+  Title: <input type="text" name="title"><br>
+  Artist: <input type="text" name="artist"><br>
+  Duration: <input type="text" name="duration"><br>
+  <input id="audio-file" name="mp3" type="file" />
+  <input type="submit" value="Save">
+</form>
+    
+<h3>Search Track</h3>
+<form method="post" action="/search">
+  Title: <input type="text" name="title">
+  <input type="submit" value="Search">
+</form>
+
+<h3>Reset Database</h3>
+<p>Pressing this button will delete data in the database.</p>
+<form method="get" action="/remove">  
+  <input type="submit" value="Reset Database">
+</form>
+
+<p>Here are some new songs!</p>
+<div id="songs"></div>
+
+
+<div style="padding:20px;margin-top:30px;background-color:#ffffff;">
+    <h1>Explore New Songs</h1>
+
+    <style>
+        .container{
+          display:flex;
+        }
+        .fixed{
+          width: 15;
+        }
+        .flex-item{
+          flex-grow: 1;
+        }
+      </style>
+      
+
+    <p>Here are some new songs!</p>
+    <div id="songs"></div>
+    {{#tracks}}
+    <div class='container' style='color:#ffffff;padding:3px;margin-top:4px;background-color:#353535;border: 1px solid#131313;'><audio id='{{title}}'><source src='{{mp3}} '></audio><div class='fixed' id=' {{title}}  ' style='padding:6px; margin-top:10px'><i class='fa fa-play' aria-hidden='true' onclick='playAudio(\""+ {title} +"\",\""+ {title} +"\")'></i></div><div class='flex-item' style='padding:6px'><div id='{{title}}'>{{title}}</div><div style='color:rgb(173, 173, 173)'>{{artist}}</div></div><div class='flex-item' style='padding:15px' align='right'>{{duration}}</div></div>
+    {{/tracks}}
+    </div>
+  </div>
+</body>
+</html>
+
