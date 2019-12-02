@@ -1,31 +1,20 @@
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <!-- development version, includes helpful console warnings -->
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-
-    <!-- Required meta tags always come first -->
+  <!-- Required meta tags always come first -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>TuneRater - Explore</title>
+    <title>TuneRater</title>
 
     <!-- Load our React component. -->
-    <link href="style.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="explore.js" defer></script>
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
 
-    <!-- Bootstrap core CSS -->
-    <link href="../../css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Material Design Bootstrap -->
-    <link href="../../css/mdb.min.css" rel="stylesheet">
-
-  <style>
+    <style>
     body {margin:0;}
 
     ul {
@@ -62,15 +51,15 @@
 </head>
 
 <body>
-
   <ul>
-    <li><a href="home.html"><img src="TuneRater Logo Blue.png" height="15" width="30"></a></li>
-    <li><a href="explore.html">Explore</a></li>
-    <li style="float:right"><a href="account.html"><i class="fa fa-user-circle" aria-hidden="true"></i>  Account</a></li>
+    <li><a href="http://localhost:3001/"><img src="https://raw.githubusercontent.com/yshneyderman/326Project/master/TuneRater%20Logo%20Blue.png" height="15" width="30"></a></li>
+    <li><a href="http://localhost:3000/">Explore</a></li>
+    <li style="float:right"><a href="http://localhost:3002/"><i class="fa fa-plus" aria-hidden="true"></i>Add Song</a></li>
   </ul>
-
   <div style="padding:20px;margin-top:30px;background-color:#ffffff;">
-    <h1>Explore New Songs</h1>
+
+
+    <h1>TuneRater Home</h1>
 
     <style>
         .container{
@@ -85,11 +74,13 @@
       </style>
       
 
-    <p>Here are some new songs!</p>
+    <p>Here are the top songs!</p>
     <div id="songs"></div>
-    
-    
+    {{#tracks}}
+    <div class='container' style='color:#ffffff;padding:3px;margin-top:4px;background-color:#353535;border: 1px solid#131313;'><audio id='{{title}}'><source src='{{mp3}} '></audio><div class='fixed' id=' {{title}}  ' style='padding:6px; margin-top:10px'><i class='fa fa-play' aria-hidden='true' onclick='playAudio(\""+ {title} +"\",\""+ {title} +"\")'></i></div><div class='flex-item' style='padding:6px'><div id='{{title}}'>{{title}}</div><div style='color:rgb(173, 173, 173)'>{{artist}}</div></div><div class='flex-item' style='padding:15px' align='right'>{{title}}</div></div>
+    {{/tracks}}
     </div>
+</div>
 </body>
-
 </html>
+
