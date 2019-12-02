@@ -35,12 +35,20 @@ app.get("/", (req, res) => {
 
 app.post("/search", (req, res) => {
   let title = req.body.title;  
-
-  Track.find({ title : title }, (err, tracks) => {
-    let view = { tracks , errormsg : error};
-    res.render('track', view);
-    error = '';
-  });
+  if(title === ""){
+    Track.find((err, tracks) => {
+      let view = { tracks , errormsg : error};
+      res.render('track', view);
+      error = '';
+    });
+  }
+  else{
+    Track.find({ title : title }, (err, tracks) => {
+      let view = { tracks , errormsg : error};
+      res.render('track', view);
+      error = '';
+    });
+  }
 });
 
 app.listen(3000, () => {
@@ -133,12 +141,20 @@ app3.get("/", (req, res) => {
 
 app3.post("/search", (req, res) => {
   let title = req.body.title;  
-
-  Track.find({ title : title }, (err, tracks) => {
-    let view = { tracks , errormsg : error};
-    res.render('track', view);
-    error = '';
-  });
+  if(title === ""){
+    Track.find((err, tracks) => {
+      let view = { tracks , errormsg : error3};
+      res.render('add', view);
+      error = '';
+    });
+  }
+  else{
+    Track.find({ title : title }, (err, tracks) => {
+      let view = { tracks , errormsg : error};
+      res.render('track', view);
+      error = '';
+    });
+  }
 });
 
 app3.get('/remove', (req, res) => {

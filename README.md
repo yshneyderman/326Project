@@ -24,12 +24,14 @@ Navigate to the folder where the GitHub repository is stored locally. Copy the p
 ![FS](fs.png)
 
 Open command prompt and change directory to the copied path:
-
-*cd C:\Users\Yefim\Desktop\Github Repository\326Project*
+    *cd C:\Users\Yefim\Desktop\Github Repository\326Project*
 
 Then type the following:
+    *npm start*
+
+This will setup the server on port 3000 and print "Running" if all is well.
 ![cmd](cmd.png)
 
-*npm start*
-
 Then open the browser and navigate to: http://localhost:3000/
+
+To end the program type Ctrl+c into the command prompt twice.

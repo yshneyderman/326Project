@@ -89,13 +89,10 @@
   <input type="submit" value="Reset Database">
 </form>
 
-<p>Here are some new songs!</p>
-<div id="songs"></div>
-
-
-<div style="padding:20px;margin-top:30px;background-color:#ffffff;">
-    <h1>Explore New Songs</h1>
-
+<h2>Song Database</h1>
+<p>Songs in the database</p>
+<div style="padding:20px;margin-top:5px;background-color:#ffffff;">
+    
     <style>
         .container{
           display:flex;
@@ -108,11 +105,9 @@
         }
       </style>
       
-
-    <p>Here are some new songs!</p>
     <div id="songs"></div>
     {{#tracks}}
-    <div class='container' style='color:#ffffff;padding:3px;margin-top:4px;background-color:#353535;border: 1px solid#131313;'><audio id='{{title}}'><source src='{{mp3}} '></audio><div class='fixed' id=' {{title}}  ' style='padding:6px; margin-top:10px'><i class='fa fa-play' aria-hidden='true' onclick='playAudio(\""+ {title} +"\",\""+ {title} +"\")'></i></div><div class='flex-item' style='padding:6px'><div id='{{title}}'>{{title}}</div><div style='color:rgb(173, 173, 173)'>{{artist}}</div></div><div class='flex-item' style='padding:15px' align='right'>{{duration}}</div></div>
+    <div class='container' style='color:#ffffff;padding:3px;margin-top:4px;background-color:#353535;border: 1px solid#131313;'><audio id='{{title}}'><source src='{{mp3}} '></audio><div class='flex-item' style='padding:6px'><div id='{{title}}'>{{title}}</div><div style='color:rgb(173, 173, 173)'>{{artist}}</div></div><div class='flex-item' style='padding:15px' align='right'>{{duration}}</div></div>
     {{/tracks}}
     </div>
   </div>

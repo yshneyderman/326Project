@@ -8,6 +8,6 @@ I have lots of experience programming with Java, C, Python, and Javascript and I
 
 In my free time I like coding, hiking, painting, listening to music, reading, swimming, badminton, and watching my favorite movies.
 
-I'm Plat V in Smite: https://smite.guru/profile/6867621-TotalHegemony/ranked
+I'm Plat IV in Smite: https://smite.guru/profile/6867621-TotalHegemony/ranked
 
 Here's a link to my personal website: https://yshneyderman.github.io/
