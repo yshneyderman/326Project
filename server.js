@@ -27,7 +27,6 @@ let error = '';
 
 app.get("/", (req, res) => {
   Track.find((err, tracks) => {
-    console.log(tracks);
     let view = { tracks , errormsg : error};
     res.render('track', view);
     error = '';
@@ -36,14 +35,14 @@ app.get("/", (req, res) => {
 
 app.post("/upvote", (req, res) => {
   let title = req.body.title;
-  Track.findOne({ title : title }, (err, tracks) => {
+  Track.findOne({ title : title }, async function(err, tracks){
     tracks.upvotes += 1;
-    tracks.save(function(err,tracks) {
-      //updated
-    });
+    tracks.markModified('upvotes');
+    await tracks.save();
     error = '';
   });
   Track.find((err, tracks) => {
+    console.log(tracks);
     let view = { tracks , errormsg : error};
     res.render('track', view);
     error = '';
