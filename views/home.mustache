@@ -28,10 +28,24 @@
     .header-text {
       text-align: center;
       position: absolute;
+      top: 86%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+    }
+
+    .header-text1 {
+      background-image: url("https://raw.githubusercontent.com/yshneyderman/326Project/master/TR.png");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 340px 240px;
+      text-align: center;
+      position: absolute;
+      padding:2px;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      color: black;
+      color: white;
     }
 
     .navbar-item {
@@ -48,7 +62,7 @@
       margin: 0;
       padding: 0;
       overflow: hidden;
-      background-color: #333;
+      background-color: #130125;
       position: fixed;
       top: 0;
       width: 100%;
@@ -82,10 +96,14 @@
     <li><a href="http://localhost:3000/">Explore</a></li>
     <li style="float:right"><a href="http://localhost:3002/"><i class="fa fa-plus" aria-hidden="true"></i>   Add Song</a></li>
   </ul>
-  <div class="header-image" style="margin-top:45px;"">
-    <div class="header-text">
-      <h1 style="font-size:60px">Welcome to TuneRater</h1>
-      <h3>Let's make good music</h3>
+  <div class="header-image" style="margin-top:45px;">
+    
+    <div class="header-text1">
+      <h1 style="font-size:80px;font-weight: 820">TuneRater</h1>
+      </div>
+      <div class="header-text">
+      <h4>LET'S MAKE GOOD MUSIC</h4>
+      <h5>UPLOAD&nbsp;&nbsp;&nbsp;LISTEN&nbsp;&nbsp;&nbsp;SHARE</h5>
     </div>
   </div>
   <div style="padding:20px;margin-top:30px;background-color:#ffffff;">
