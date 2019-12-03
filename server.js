@@ -3,9 +3,140 @@ let bodyParser = require("body-parser");
 let mustacheExpress = require('mustache-express');
 let Track = require("./models/track");
 
-let app = express();
+let trackRoute = express.Router();
+let multer = require('multer');
+
+let mongodb = require('mongodb');
+let MongoClient = require('mongodb').MongoClient;
+let ObjectID = require('mongodb').ObjectID;
+
+let app1 = express();
 
 const router = express.Router();
+
+
+/**
+ * https://stackoverflow.com/questions/28788872/multer-module-wont-start
+ * https://stackoverflow.com/questions/47662220/db-collection-is-not-a-function-when-using-mongoclient-v3-0 - some of new code
+ * https://stackoverflow.com/questions/48058565/cannot-read-property-collection-of-undefined-mongodb
+ * https://codeforgeek.com/mongodb-atlas-node-js/
+ * https://medium.com/@richard534/uploading-streaming-audio-using-nodejs-express-mongodb-gridfs-b031a0bcb20f - most of new code
+ * might need to manually npm i multer if it doesn't install itself
+ * 
+ * 
+ * 
+ * 
+ */
+/**
+ * NPM Module dependencies.
+ */
+//const express = require('express');
+
+
+/**
+ * NodeJS Module dependencies.
+ */
+const { Readable } = require('stream');
+
+/**
+ * Create Express server && Express Router configuration.
+ */
+//const app1 = express();
+app1.use('/TRtest', trackRoute);
+
+/**
+ * Connect Mongo Driver to MongoDB.
+ */
+let dbc;
+const uri = "mongodb+srv://rdwest:teamtwentyfour@cluster0-slik4.mongodb.net/TRtest?retryWrites=true&w=majority"
+MongoClient.connect(uri, function(err, client) {
+   if(err) {
+        console.log('Error occurred while connecting to MongoDB Atlas...\n',err);
+   }
+   console.log('Connected...');
+   dbc = client.db("TRtest");
+});
+
+/**
+ * GET /tracks
+ */
+
+trackRoute.get('/:trackID', (req, res) => {
+  try {
+    var trackID = new ObjectID(req.params.trackID);
+  } catch(err) {
+    return res.status(400).json({ message: "Invalid trackID in URL parameter. Must be a single String of 12 bytes or a string of 24 hex characters" }); 
+  }
+  res.set('content-type', 'audio/mp3');
+  res.set('accept-ranges', 'bytes');
+
+  let bucket = new mongodb.GridFSBucket(dbc, {
+    bucketName: 'TRtest'
+  },"w");
+
+  let downloadStream = bucket.openDownloadStream(trackID);
+
+  downloadStream.on('data', (chunk) => {
+    res.write(chunk);
+  });
+
+  downloadStream.on('error', () => {
+    res.sendStatus(404);
+  });
+
+  downloadStream.on('end', () => {
+    res.end();
+  });
+});
+
+/**
+ * POST /tracks
+ */
+trackRoute.post('/', (req, res) => {
+  const storage = multer.memoryStorage()
+  const upload = multer({ storage: storage, limits: { fields: 1, fileSize: 6000000, files: 1, parts: 2 }});
+  upload.single('track')(req, res, (err) => {
+    /**if (err) {
+      return res.status(400).json({ message: "Upload Request Validation Failed" });
+    } else if(!req.body.name) {
+      return res.status(400).json({ message: "No track name in request body" });
+    }**/
+    
+    let trackName = req.body.name;
+    
+    // Covert buffer to Readable Stream
+    const readableTrackStream = new Readable();
+    readableTrackStream.push(req.file.buffer);
+    readableTrackStream.push(null);
+
+    let bucket = new mongodb.GridFSBucket(dbc, {
+      bucketName: 'TRtest'
+    }, "w");
+
+    let uploadStream = bucket.openUploadStream(trackName);
+    let id = uploadStream.id;
+    readableTrackStream.pipe(uploadStream);
+
+    uploadStream.on('error', () => {
+      return res.status(500).json({ message: "Error uploading file" });
+    });
+
+    uploadStream.on('finish', () => {
+      return res.status(201).json({ message: "File uploaded successfully, stored under Mongo ObjectID: " + id });
+    });
+  });
+});
+
+app1.listen(3005, () => {
+  console.log("App1 listening on port 3005!");
+});
+
+
+
+
+
+
+let app = express();
 
 // This will allow the router to parse both json and form data.
 router.use(bodyParser.json());
