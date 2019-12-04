@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <!-- Required meta tags always come first -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+    <meta http-equiv='x-ua-compatible' content='ie=edge'>
+    <title>TuneRater - Login</title>
+
+    <!-- Load our React component. -->
+    <link rel='stylesheet' type='text/css' href='css/style.css'>
+
+    <!-- Font Awesome -->
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.6.3/css/all.css'>
+    <script>
+      function signup(){
+        repl = document.getElementById('login');
+        repl.innerHTML = "<div class='header-image' style='margin-top:14px;'><div class='header-text1'><h1 style='font-size:30px;font-weight: bold'>TuneRater</h1></div><div class='header-text'></div></div><div><br><br></div><form method='post' action='/login'><div><input type='text' id='username' name='username' placeholder='username' style='border: 1px solid #dedede;background-color:#f2f2f2;color:black;width: 370px; height: 30px; padding: 9px 9px;font-size: 16px;border-radius: 2px;'></div><div><br></div><div><input type='password' id='password' name='password' placeholder='password' minlength='8' required style='border: 1px solid #dedede;background-color:#f2f2f2;color:black;width: 370px; height: 30px; padding: 9px 9px;font-size: 16px;border-radius: 2px;'></div><div><br></div><div><input type='password' id='confpassword' name='confpassword' placeholder='confirm password' minlength='8' required style='border: 1px solid #dedede;background-color:#f2f2f2;color:black;width: 370px; height: 30px; padding: 9px 9px;font-size: 16px;border-radius: 2px;'></div><div><br></div><div><h3 id='errormsg' style='font:arial'>{{errormsg}}</h3><input class='btn' type='submit' value='SIGN UP'><div><div><br><br></div><div><p>Already a user? </p><p class='signup' style='text-decoration: underline;cursor: pointer;' onclick='login()'>Log in to your account</p></div></form>";
+      }
+
+      function login(){
+        repl = document.getElementById('login');
+        repl.innerHTML = "<div class='header-image' style='margin-top:14px;'><div class='header-text1'><h1 style='font-size:30px;font-weight: bold'>TuneRater</h1></div><div class='header-text'></div></div><div><br><br></div><form method='post' action='/signup'><div><input type='text' id='username' name='username' placeholder='username' style='border: 1px solid #dedede;background-color:#f2f2f2;color:black;width: 370px; height: 30px; padding: 9px 9px;font-size: 16px;border-radius: 2px;'></div><div><br></div><div><input type='password' id='password' name='password' placeholder='password' minlength='8' required style='border: 1px solid #dedede;background-color:#f2f2f2;color:black;width: 370px; height: 30px; padding: 9px 9px;font-size: 16px;border-radius: 2px;'></div><div><br></div><div><h3 id='errormsg' style='font:arial'>{{errormsg}}</h3><input class='btn' type='submit' value='LOGIN'><div><div><br><br></div><div><p>New user? </p><p class='signup' style='text-decoration: underline;cursor: pointer;' onclick='signup()'>Sign up now</p></div></form>";
+      }
+    </script>
+    <style>
+      label {
+        display: block;
+        font: .9rem 'arial';
+      }
+      .centerDiv {
+        position: absolute;
+        border-radius: 5px;
+        width: 500px;
+        height: 600px;
+        z-index: 15;
+        top: 50%;
+        left: 50%;
+        margin: -300px 0 0 -250px;
+        background: white;
+        box-shadow: 1px 2px 2px;
+      }
+      html {
+        height: 100%;
+      }
+      body {
+        font: .9rem 'arial';
+        height: 100%;
+        margin: 0;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background: linear-gradient(#0c7c8a,#130125);
+      }
+
+      input[type='submit'],
+      label {
+        margin-top: 1rem;
+      }
+
+      .header-image {
+        background-color: white;
+        height:100px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: relative;
+      }
+
+    .header-text {
+      text-align: center;
+      position: absolute;
+      top: 86%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+    }
+
+    .header-text1 {
+      background-image: url('https://raw.githubusercontent.com/yshneyderman/326Project/master/TR.png');
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 80px 50px;
+      text-align: center;
+      position: absolute;
+      padding:2px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: black;
+    }
+
+    .btn {
+      border-radius: 2px;
+      background-color: #0c7c8a;
+      color: white;
+      padding: 15px 20px;
+      border: none;
+      cursor: pointer;
+      width: 390px;
+      height: 50px;
+      opacity: 0.9;
+      font-size: 18px;
+    }
+
+    .btn:hover {
+      opacity: 1;
+    }
+
+    p {
+      display:inline;
+    }
+    </style>
+</head>
+
+<body>
+    <div id='login' class='centerDiv' align='center'>
+      <div class='header-image' style='margin-top:14px;'>
+        <div class='header-text1'>
+          <h1 style='font-size:30px;font-weight: bold'>TuneRater</h1>
+          </div>
+          <div class='header-text'>
+        </div>
+      </div>
+      <div>
+          <br><br>
+      </div>
+      <form method='post' action='/login'>
+        <div>
+          <input type='text' id='username' name='username' placeholder='username' style='border: 1px solid #dedede;background-color:#f2f2f2;color:black;width: 370px; height: 30px; padding: 9px 9px;font-size: 16px;border-radius: 2px;'>
+        </div>
+        <div>
+          <br>
+        </div>
+        <div>
+          <input type='password' id='password' name='password' placeholder='password' minlength='8' required style='border: 1px solid #dedede;background-color:#f2f2f2;color:black;width: 370px; height: 30px; padding: 9px 9px;font-size: 16px;border-radius: 2px;'>
+        </div>
+        <div>
+          <br>
+        </div>
+        <div>
+          <h3 id='errormsg' style='font:arial'>{{errormsg}}</h3>
+          <input class='btn' type='submit' value='LOGIN'>
+        <div>
+        <div>
+          <br><br>
+        </div>
+        <div>
+          <p>New user? </p><p class='signup' style='text-decoration: underline;cursor: pointer;' onclick='signup()'>Sign up now</p>
+        </div>
+      </form>
+    </div>
+</body>
+</html>
+

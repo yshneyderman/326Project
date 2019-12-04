@@ -2,6 +2,8 @@ let express = require("express");
 let bodyParser = require("body-parser");
 let mustacheExpress = require('mustache-express');
 let Track = require("./models/track");
+let User = require("./models/user");
+let user;
 
 let app = express();
 
@@ -186,6 +188,87 @@ app3.get('/remove', (req, res) => {
 app3.listen(3002, () => {
   console.log('Add Page Running.');
   console.log('Visit http://localhost:3002 in your favorite browser.');
+});
+
+let app4 = express();
+
+// This will allow the router to parse both json and form data.
+router.use(bodyParser.json());
+
+// This will use the static middleware
+router.use(express.static('public'));
+
+app4.use(bodyParser.urlencoded({ extended: false }));
+app4.use(express.static("public"));
+
+// Register '.mustache' extension with Mustache Express
+app4.engine('mustache', mustacheExpress());
+app4.set('view engine', 'mustache');
+app4.set('views', 'views');
+
+// Error message variable to be used to pass along 
+// information to subsequent route if an error happ2ens.
+let error4 = 'Invalid Login';
+
+app4.get("/", (req, res) => {
+  Track.find((err, tracks) => {
+    let view = { tracks};
+    res.render('login', view);
+    error = '';
+  });
+});
+
+app4.post("/signup", (req, res) => {
+  let username = req.body.username;
+  let password = req.body.password;
+  if(username === "" || password === ""){
+    let view = {errormsg : error4};
+    res.render('login', view);  
+  }
+  else{
+    //success
+    user = username;
+    usr= new User({
+      username: username,
+      password: password
+  });
+
+  usr.save((err, usr) => {
+      if (err) {
+          res.status(400).send(err);
+          res.render('login', view); 
+      } else {            
+          res.redirect("http://localhost:3001");
+      }
+  });
+  }
+});
+
+app4.post("/login", (req, res) => {
+  let username = req.body.username;
+  let password = req.body.password;
+  if(username === "" || password === ""){
+    let view = {errormsg : error4};
+    res.render('login', view);  
+  }
+  else{
+    User.findOne({ username : username }, (err, users) => {
+      if(users.password === password){
+        user = username;
+        res.redirect("http://localhost:3001");
+      }
+      else{
+        let view = {errormsg : error4};
+        res.render('login', view);  
+      }
+    });
+  }
+});
+
+
+app4.listen(3003, () => {
+  console.log('Login Page Running.');
+  console.log('Visit http://localhost:3003 in your favorite browser.');
 });
 
 
