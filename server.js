@@ -189,6 +189,7 @@ app4.set('views', 'views');
 // Error message variable to be used to pass along 
 // information to subsequent route if an error happ2ens.
 let error4 = 'Invalid Login';
+let error7 = 'Password Must Match';
 
 app4.get("/", (req, res) => {
   Track.find((err, tracks) => {
@@ -201,7 +202,12 @@ app4.get("/", (req, res) => {
 app4.post("/signup", (req, res) => {
   let username = req.body.username;
   let password = req.body.password;
-  if(username === "" || password === ""){
+  let confpassword = req.body.confpassword;
+  if(confpassword !== password){
+    let view = {errormsg : error7};
+    res.render('login', view);  
+  }
+  else if(username === "" || password === ""){
     let view = {errormsg : error4};
     res.render('login', view);  
   }
