@@ -5,6 +5,8 @@ let Track = require("./models/track");
 let User = require("./models/user");
 let user = "Admin";
 
+const mm = require('music-metadata');
+const util = require('util');
 var multer  = require('multer');
 var upload = multer({ dest: 'uploads/' });
 const fs = require('fs');
@@ -44,24 +46,25 @@ app.get("/", (req, res) => {
       let view = { tracks , errormsg : error, user};
       res.render('track', view);
       error = '';
-    });
+    }).sort({ "upvotes": "desc" });
   }
 });
 
 app.post("/upvote", (req, res) => {
   let title = req.body.title;
-  Track.findOne({ title : title }, async function(err, tracks){
+  Track.findOne({ title : title }, function(err, tracks){
     tracks.upvotes += 1;
     tracks.markModified('upvotes');
-    await tracks.save();
-    error = '';
-  });
-  Track.find((err, tracks) => {
-    for(let i =0; i< tracks.length; ++i){
-      tracks[i].mp364 = tracks[i].mp3.toString('base64');
-    }
-    let view = { tracks , errormsg : error, user};
-    res.render('track', view);
+    tracks.save(function () {
+      Track.find((err, tracks) => {
+        for(let i =0; i< tracks.length; ++i){
+          tracks[i].mp364 = tracks[i].mp3.toString('base64');
+        }
+        let view = { tracks , errormsg : error, user};
+        res.render('track', view);
+        error = '';
+      }).sort({ "upvotes": "desc" });
+    });
     error = '';
   });
 });
@@ -73,14 +76,14 @@ app.post("/search", (req, res) => {
       let view = { tracks , errormsg : error, user};
       res.render('track', view);
       error = '';
-    });
+    }).sort({ "upvotes": "desc" });
   }
   else{
     Track.find({ title : title }, (err, tracks) => {
       let view = { tracks , errormsg : error, user};
       res.render('track', view);
       error = '';
-    });
+    }).sort({ "upvotes": "desc" });
   }
 });
 
@@ -140,13 +143,20 @@ app3.post("/create", upload.single('mp3'), (req, res, next) => {
   // Create a track from the submitted form data
   let loc = 'uploads/' + req.file.filename;
   var filething = fs.readFileSync(loc);
-  console.log(filething);
-  tra = new Track({
+  let dur = 0;
+  mm.parseBuffer(filething, 'audio/mp3')
+  .then( metadata => {
+    util.inspect(metadata, { showHidden: false, depth: null });
+    dur = metadata.format.duration;
+    let minutes = Math.floor(dur/60);
+    let seconds = dur - (minutes*60);
+    dur = minutes.toString() + ":" + seconds.toString();
+    tra = new Track({
       title: req.body.title,
       artist: req.body.artist,
       mp3: filething,
       mp364: "",
-      duration: req.body.duration,
+      duration: dur,
       upvotes: 0
   });
 
@@ -157,6 +167,13 @@ app3.post("/create", upload.single('mp3'), (req, res, next) => {
           res.redirect('/');
       }
   });
+   });
+   try {
+    fs.unlinkSync(loc);
+    //file removed
+  } catch(err) {
+    console.error(err);
+  }  
 });
 
 app3.get("/", (req, res) => {
@@ -187,7 +204,7 @@ app4.set('view engine', 'mustache');
 app4.set('views', 'views');
 
 // Error message variable to be used to pass along 
-// information to subsequent route if an error happ2ens.
+// information to subsequent route if an error happens.
 let error4 = 'Invalid Login';
 let error7 = 'Password Must Match';
 let error8 = 'Username Already Exists';
