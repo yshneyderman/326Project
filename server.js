@@ -57,6 +57,9 @@ app.post("/upvote", (req, res) => {
     error = '';
   });
   Track.find((err, tracks) => {
+    for(let i =0; i< tracks.length; ++i){
+      tracks[i].mp364 = tracks[i].mp3.toString('base64');
+    }
     let view = { tracks , errormsg : error, user};
     res.render('track', view);
     error = '';
