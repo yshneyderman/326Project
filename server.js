@@ -168,9 +168,12 @@ app3.post("/create", upload.single('mp3'), (req, res, next) => {
       }
   });
    });
-  console.log(filething);
- 
-  
+   try {
+    fs.unlinkSync(loc);
+    //file removed
+  } catch(err) {
+    console.error(err);
+  }  
 });
 
 app3.get("/", (req, res) => {
