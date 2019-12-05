@@ -190,6 +190,7 @@ app4.set('views', 'views');
 // information to subsequent route if an error happ2ens.
 let error4 = 'Invalid Login';
 let error7 = 'Password Must Match';
+let error8 = 'Username Already Exists';
 
 app4.get("/", (req, res) => {
   Track.find((err, tracks) => {
@@ -203,31 +204,41 @@ app4.post("/signup", (req, res) => {
   let username = req.body.username;
   let password = req.body.password;
   let confpassword = req.body.confpassword;
-  if(confpassword !== password){
-    let view = {errormsg : error7};
-    res.render('login', view);  
-  }
-  else if(username === "" || password === ""){
-    let view = {errormsg : error4};
-    res.render('login', view);  
-  }
-  else{
-    //success
-    user = username;
-    usr= new User({
-      username: username,
-      password: password
+
+  User.findOne({ username : username }, (err, users) => {
+    if(users !== null){
+      let view = {errormsg : error8};
+      res.render('login', view);  
+    }
+    if(confpassword !== password){
+      let view = {errormsg : error7};
+      res.render('login', view);  
+    }
+    else if(username === "" || password === ""){
+      let view = {errormsg : error4};
+      res.render('login', view);  
+    }
+    else
+    {
+      //success
+      user = username;
+      usr= new User({
+        username: username,
+        password: password
+      });
+  
+      usr.save((err, usr) => {
+        if (err) {
+            res.status(400).send(err);
+            res.render('login', view); 
+        } else {            
+            res.redirect("http://localhost:3001");
+        }
+      });
+    }
   });
 
-  usr.save((err, usr) => {
-      if (err) {
-          res.status(400).send(err);
-          res.render('login', view); 
-      } else {            
-          res.redirect("http://localhost:3001");
-      }
-  });
-  }
+  
 });
 
 app4.post("/login", (req, res) => {
