@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Required meta tags always come first -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>TuneRater - Explore</title>
+
+    <!-- Load our React component. -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="explore.js" defer></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+    <style>
+    .navbar-item {
+      color:#4a4a4a !important;
+    }
+
+    body {
+      margin:0;
+      font: 12pt Arial;   
+    }
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #130125;
+      position: fixed;
+      top: 0;
+      width: 100%;
+    }
+
+    li {
+      float: left;
+    }
+
+    li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 20px 30px;
+      text-decoration: none;
+    }
+
+    li a:hover:not(.active) {
+      background-color: #0c7c8a;
+    }
+
+    .active {
+      background-color: #0c7c8a;
+    }
+  </style>
+</head>
+
+<body>
+
+  <ul>
+    <ul>
+    <li><a href="http://localhost:3001/"><img src="https://raw.githubusercontent.com/yshneyderman/326Project/master/TuneRater%20Logo%20Blue.png" height="15" width="30"></a></li>
+    <li style="float:center"><a href="http://localhost:3000/">Explore</a></li>
+    <li class="active" style="float:right"><a href="http://localhost:3004/"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;{{user}}</a></li>
+    <li style="float:right"><a href="http://localhost:3002/"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Add Song</a></li>
+  </ul>
+  </ul>
+  <div style="padding:20px;margin-top:30px;background-color:#ffffff;">  
+
+
+<h3 id="errormsg">{{errormsg}}</h3>
+   
+<h3>Search Track</h3>
+<form method="post" action="/search">
+  Title: <input type="text" name="title">
+  <input type="submit" value="Search">
+</form>
+
+<h3>Delete my Songs</h3>
+<p>Pressing this button will delete all the songs you uploaded.</p>
+<form method="get" action="/remove">  
+  <input type="submit" value="Reset Database">
+</form>
+
+<h2>Your Songs</h1>
+<p>Songs you uploaded:</p>
+<div style="padding:20px;margin-top:5px;background-color:#ffffff;">
+    
+    <style>
+        .container{
+          display:flex;
+        }
+        .fixed{
+          width: 15;
+        }
+        .flex-item{
+          flex-grow: 1;
+        }
+      </style>
+      
+    <div id="songs"></div>
+    {{#tracks}}
+    <div class='container' style='color:#ffffff;padding:3px;margin-top:4px;background-color:#353535;border: 1px solid#131313;'><audio id='{{title}}'><source src='{{mp3}} '></audio><div class='flex-item' style='padding:6px'><div id='{{title}}'>{{title}}</div><div style='color:rgb(173, 173, 173)'>{{artist}}</div></div><div class='flex-item' style='padding:15px' align='right'>{{duration}}</div></div>
+    {{/tracks}}
+    </div>
+  </div>
+</body>
+</html>
+

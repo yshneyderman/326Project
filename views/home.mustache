@@ -60,7 +60,7 @@
     ul {
       list-style-type: none;
       margin: 0;
-      padding: 0;
+      padding: 0px;
       overflow: hidden;
       background-color: #130125;
       position: fixed;
@@ -76,16 +76,16 @@
       display: block;
       color: white;
       text-align: center;
-      padding: 15px 30px;
+      padding: 20px 30px;
       text-decoration: none;
     }
 
     li a:hover:not(.active) {
-      background-color: #111;
+      background-color: #0c7c8a;
     }
 
     .active {
-      background-color: #4CAF50;
+      background-color: #0c7c8a;
     }
   </style>
 </head>
@@ -93,10 +93,11 @@
 <body>
   <ul>
     <li><a href="http://localhost:3001/"><img src="https://raw.githubusercontent.com/yshneyderman/326Project/master/TuneRater%20Logo%20Blue.png" height="15" width="30"></a></li>
-    <li><a href="http://localhost:3000/">Explore</a></li>
-    <li style="float:right"><a href="http://localhost:3002/"><i class="fa fa-plus" aria-hidden="true"></i>   Add Song</a></li>
+    <li style="float:center"><a href="http://localhost:3000/">Explore</a></li>
+    <li style="float:right"><a href="http://localhost:3004/"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;{{user}}</a></li>
+    <li style="float:right"><a href="http://localhost:3002/"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Add Song</a></li>
   </ul>
-  <div class="header-image" style="margin-top:45px;">
+  <div class="header-image" style="margin-top:58px;">
     
     <div class="header-text1">
       <h1 style="font-size:80px;font-weight: 820">TuneRater</h1>

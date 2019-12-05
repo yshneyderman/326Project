@@ -6,6 +6,7 @@ var Track = db.model("Track", {
     artist:     String,
     mp3:        Buffer,
     duration:   String,
+    mp364:      String,
     upvotes:    Number,
     comments:   [String],
     accolades:  [String]

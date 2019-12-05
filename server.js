@@ -3,7 +3,11 @@ let bodyParser = require("body-parser");
 let mustacheExpress = require('mustache-express');
 let Track = require("./models/track");
 let User = require("./models/user");
-let user;
+let user = "Admin";
+
+var multer  = require('multer');
+var upload = multer({ dest: 'uploads/' });
+const fs = require('fs');
 
 let app = express();
 
@@ -28,11 +32,20 @@ app.set('views', 'views');
 let error = '';
 
 app.get("/", (req, res) => {
-  Track.find((err, tracks) => {
-    let view = { tracks , errormsg : error};
-    res.render('track', view);
-    error = '';
-  });
+  if(user === "Admin"){
+    res.redirect("http://localhost:3003");
+  }
+  else{
+    
+    Track.find((err, tracks) => {
+      for(let i =0; i< tracks.length; ++i){
+        tracks[i].mp364 = tracks[i].mp3.toString('base64');
+      }
+      let view = { tracks , errormsg : error, user};
+      res.render('track', view);
+      error = '';
+    });
+  }
 });
 
 app.post("/upvote", (req, res) => {
@@ -44,8 +57,7 @@ app.post("/upvote", (req, res) => {
     error = '';
   });
   Track.find((err, tracks) => {
-    console.log(tracks);
-    let view = { tracks , errormsg : error};
+    let view = { tracks , errormsg : error, user};
     res.render('track', view);
     error = '';
   });
@@ -55,14 +67,14 @@ app.post("/search", (req, res) => {
   let title = req.body.title;  
   if(title === ""){
     Track.find((err, tracks) => {
-      let view = { tracks , errormsg : error};
+      let view = { tracks , errormsg : error, user};
       res.render('track', view);
       error = '';
     });
   }
   else{
     Track.find({ title : title }, (err, tracks) => {
-      let view = { tracks , errormsg : error};
+      let view = { tracks , errormsg : error, user};
       res.render('track', view);
       error = '';
     });
@@ -71,17 +83,10 @@ app.post("/search", (req, res) => {
 
 app.listen(3000, () => {
   console.log('Explore Page Running.');
-  console.log('Visit http://localhost:3000 in your favorite browser.');
 });
 
 
 let app2 = express();
-
-// This will allow the router to parse both json and form data.
-router.use(bodyParser.json());
-
-// This will use the static middleware
-router.use(express.static('public'));
 
 app2.use(bodyParser.urlencoded({ extended: false }));
 app2.use(express.static("public"));
@@ -96,27 +101,24 @@ app2.set('views', 'views');
 let error2 = '';
 
 app2.get("/", (req, res) => {
-  Track.find((err, tracks) => {
-    let view = { tracks , errormsg : error2};
-    res.render('home', view);
-    error = '';
-  });
+  if(user === "Admin"){
+    res.redirect("http://localhost:3003");
+  }
+  else{
+    Track.find((err, tracks) => {
+      let view = { tracks , errormsg : error2, user};
+      res.render('home', view);
+      error = '';
+    });
+  }
 });
 
 
 app2.listen(3001, () => {
   console.log('Home Page Running.');
-  console.log('Visit http://localhost:3001 in your favorite browser.');
 });
 
-
 let app3 = express();
-
-// This will allow the router to parse both json and form data.
-router.use(bodyParser.json());
-
-// This will use the static middleware
-router.use(express.static('public'));
 
 app3.use(bodyParser.urlencoded({ extended: false }));
 app3.use(express.static("public"));
@@ -131,12 +133,16 @@ app3.set('views', 'views');
 let error3 = '';
 let tra;
 
-app3.post("/create", (req, res) => {
+app3.post("/create", upload.single('mp3'), (req, res, next) => {
   // Create a track from the submitted form data
+  let loc = 'uploads/' + req.file.filename;
+  var filething = fs.readFileSync(loc);
+  console.log(filething);
   tra = new Track({
       title: req.body.title,
       artist: req.body.artist,
-      mp3: req.body.mp3,
+      mp3: filething,
+      mp364: "",
       duration: req.body.duration,
       upvotes: 0
   });
@@ -151,52 +157,23 @@ app3.post("/create", (req, res) => {
 });
 
 app3.get("/", (req, res) => {
-  Track.find((err, tracks) => {
-    let view = { tracks , errormsg : error3};
-    res.render('add', view);
-    error = '';
-  });
-});
-
-app3.post("/search", (req, res) => {
-  let title = req.body.title;  
-  if(title === ""){
+  if(user === "Admin"){
+    res.redirect("http://localhost:3003");
+  }
+  else{
     Track.find((err, tracks) => {
-      let view = { tracks , errormsg : error3};
+      let view = { tracks , errormsg : error3, user};
       res.render('add', view);
       error = '';
     });
   }
-  else{
-    Track.find({ title : title }, (err, tracks) => {
-      let view = { tracks , errormsg : error};
-      res.render('track', view);
-      error = '';
-    });
-  }
-});
-
-app3.get('/remove', (req, res) => {
-  Track.remove({}, (err) => {
-    if (err) {
-      error = err.errormsg;      
-    }
-    res.redirect('/');
-  });
 });
 
 app3.listen(3002, () => {
   console.log('Add Page Running.');
-  console.log('Visit http://localhost:3002 in your favorite browser.');
 });
 
 let app4 = express();
-
-// This will allow the router to parse both json and form data.
-router.use(bodyParser.json());
-
-// This will use the static middleware
-router.use(express.static('public'));
 
 app4.use(bodyParser.urlencoded({ extended: false }));
 app4.use(express.static("public"));
@@ -269,6 +246,64 @@ app4.post("/login", (req, res) => {
 app4.listen(3003, () => {
   console.log('Login Page Running.');
   console.log('Visit http://localhost:3003 in your favorite browser.');
+});
+
+let app5 = express();
+
+app5.use(bodyParser.urlencoded({ extended: false }));
+app5.use(express.static("public"));
+
+// Register '.mustache' extension with Mustache Express
+app5.engine('mustache', mustacheExpress());
+app5.set('view engine', 'mustache');
+app5.set('views', 'views');
+
+// Error message variable to be used to pass along 
+// information to subsequent route if an error happ3ens.
+let error5 = '';
+
+app5.get("/", (req, res) => {
+  if(user === "Admin"){
+    res.redirect("http://localhost:3003");
+  }
+  else{
+    Track.find({ artist : user }, (err, tracks) => {
+      let view = { tracks , errormsg : error5, user};
+      res.render('account', view);
+      error = '';
+    });
+  }
+});
+
+app5.post("/search", (req, res) => {
+  let title = req.body.title;  
+  if(title === ""){
+    Track.find({ artist : user }, (err, tracks) => {
+      let view = { tracks , errormsg : error5, user};
+      res.render('account', view);
+      error = '';
+    });
+  }
+  else{
+    Track.find({ title : title, artist : user }, (err, tracks) => {
+      let view = { tracks , errormsg : error5, user};
+      res.render('account', view);
+      error = '';
+    });
+  }
+});
+
+app5.get('/remove', (req, res) => {
+  Track.remove({artist : user}, (err) => {
+    if (err) {
+      error = err.errormsg;      
+    }
+    res.redirect('/');
+  });
+});
+
+app5.listen(3004, () => {
+  console.log('Acct Page Running.');
 });
 
 

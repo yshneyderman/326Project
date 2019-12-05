@@ -105,12 +105,12 @@
       display: block;
       color: white;
       text-align: center;
-      padding: 15px 30px;
+      padding: 20px 30px;
       text-decoration: none;
     }
 
     li a:hover:not(.active) {
-      background-color: #111;
+      background-color: #0c7c8a;
     }
 
     .active {
@@ -121,9 +121,12 @@
 
 <body>
   <ul>
+    <ul>
     <li><a href="http://localhost:3001/"><img src="https://raw.githubusercontent.com/yshneyderman/326Project/master/TuneRater%20Logo%20Blue.png" height="15" width="30"></a></li>
-    <li><a class="active" href="http://localhost:3000/">Explore</a></li>
-    <li style="float:right"><a href="http://localhost:3002/"><i class="fa fa-plus" aria-hidden="true"></i>   Add Song</a></li>
+    <li class="active" style="float:center"><a href="http://localhost:3000/">Explore</a></li>
+    <li style="float:right"><a href="http://localhost:3004/"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;{{user}}</a></li>
+    <li style="float:right"><a href="http://localhost:3002/"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Add Song</a></li>
+  </ul>
   </ul>
   <div style="padding:20px;margin-top:30px;background-color:#ffffff;">  
 
@@ -165,7 +168,7 @@
       </div>
       <div class="flex-item">
         {{#tracks}}
-        <div class='container' style='color:#ffffff;padding:3px;margin-top:4px;background-color:#353535;border: 1px solid#131313;'><audio id='audio_{{title}}'><source src='{{mp3}}'></audio><div class='fixed' id='play_{{title}}' style='padding:6px; margin-top:10px'><i class='fa fa-play' aria-hidden='true' onclick='playAudio("{{title}}")'></i></div><div class='fixed1' style='padding:6px'><div id='title_{{title}}'>{{title}}</div><div id='artist_{{title}}' style='color:rgb(173, 173, 173)'>{{artist}}</div></div><div class='fixed' style='padding:10px; margin-top:7px'><form id="f{{title}}" method="post" action="/upvote" style='width:18px'>
+        <div class='container' style='color:#ffffff;padding:3px;margin-top:4px;background-color:#353535;border: 1px solid#131313;'><audio id='audio_{{title}}'><source src='data:audio/mp3;base64,{{mp364}}'></audio><div class='fixed' id='play_{{title}}' style='padding:6px; margin-top:10px'><i class='fa fa-play' aria-hidden='true' onclick='playAudio("{{title}}")'></i></div><div class='fixed1' style='padding:6px'><div id='title_{{title}}'>{{title}}</div><div id='artist_{{title}}' style='color:rgb(173, 173, 173)'>{{artist}}</div></div><div class='fixed' style='padding:10px; margin-top:7px'><form id="f{{title}}" method="post" action="/upvote" style='width:18px'>
     <input type="hidden" name="title" value='{{title}}'><i class="fa fa-heart" aria-hidden="true" onMouseOver="this.style.color='#FF335B'"
       onMouseOut="this.style.color='white'" onclick="document.getElementById('f{{title}}').submit();"></i></form></div><div class='fixed2' style='padding:10px; margin-top:6px'>  {{upvotes}}</div><div class='flex-item' style='padding:15px' align='right'>{{duration}}</div></div>
         {{/tracks}}
