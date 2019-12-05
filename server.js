@@ -227,19 +227,26 @@ app4.post("/signup", (req, res) => {
 app4.post("/login", (req, res) => {
   let username = req.body.username;
   let password = req.body.password;
+
   if(username === "" || password === ""){
     let view = {errormsg : error4};
     res.render('login', view);  
   }
   else{
     User.findOne({ username : username }, (err, users) => {
-      if(users.password === password){
-        user = username;
-        res.redirect("http://localhost:3001");
-      }
-      else{
+      if(users === null){
         let view = {errormsg : error4};
         res.render('login', view);  
+      }
+      else{
+        if(users.password === password){
+          user = username;
+          res.redirect("http://localhost:3001");
+        }
+        else{
+          let view = {errormsg : error4};
+          res.render('login', view);  
+        }
       }
     });
   }
