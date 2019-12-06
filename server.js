@@ -38,7 +38,6 @@ app.get("/", (req, res) => {
     res.redirect("http://localhost:3003");
   }
   else{
-    
     Track.find((err, tracks) => {
       for(let i =0; i< tracks.length; ++i){
         tracks[i].mp364 = tracks[i].mp3.toString('base64');
@@ -147,9 +146,9 @@ app3.post("/create", upload.single('mp3'), (req, res, next) => {
   mm.parseBuffer(filething, 'audio/mp3')
   .then( metadata => {
     util.inspect(metadata, { showHidden: false, depth: null });
-    dur = metadata.format.duration;
+    dur = Math.floor(metadata.format.duration);
     let minutes = Math.floor(dur/60);
-    let seconds = dur - (minutes*60);
+    let seconds = Math.floor(dur - (minutes*60));
     dur = minutes.toString() + ":" + seconds.toString();
     tra = new Track({
       title: req.body.title,
