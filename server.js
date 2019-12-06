@@ -147,6 +147,7 @@ app3.post("/create", upload.single('mp3'), (req, res, next) => {
   .then( metadata => {
     util.inspect(metadata, { showHidden: false, depth: null });
     dur = Math.floor(metadata.format.duration);
+    console.log(metadata);
     let minutes = Math.floor(dur/60);
     let seconds = Math.floor(dur - (minutes*60));
     dur = minutes.toString() + ":" + seconds.toString();
@@ -154,8 +155,8 @@ app3.post("/create", upload.single('mp3'), (req, res, next) => {
       title: req.body.title,
       artist: req.body.artist,
       mp3: filething,
-      mp364: "",
       duration: dur,
+      mp364: "",
       upvotes: 0
   });
 
