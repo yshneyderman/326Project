@@ -39,9 +39,6 @@ app.get("/", (req, res) => {
   }
   else{
     Track.find((err, tracks) => {
-      for(let i =0; i< tracks.length; ++i){
-        tracks[i].mp364 = tracks[i].mp3.toString('base64');
-      }
       let view = { tracks , errormsg : error, user};
       res.render('track', view);
       error = '';
@@ -56,9 +53,6 @@ app.post("/upvote", (req, res) => {
     tracks.markModified('upvotes');
     tracks.save(function () {
       Track.find((err, tracks) => {
-        for(let i =0; i< tracks.length; ++i){
-          tracks[i].mp364 = tracks[i].mp3.toString('base64');
-        }
         let view = { tracks , errormsg : error, user};
         res.render('track', view);
         error = '';
@@ -143,20 +137,24 @@ app3.post("/create", upload.single('mp3'), (req, res, next) => {
   let loc = 'uploads/' + req.file.filename;
   var filething = fs.readFileSync(loc);
   let dur = 0;
+  let sixFour = filething.toString('base64');
   mm.parseBuffer(filething, 'audio/mp3')
   .then( metadata => {
     util.inspect(metadata, { showHidden: false, depth: null });
     dur = Math.floor(metadata.format.duration);
-    console.log(metadata);
     let minutes = Math.floor(dur/60);
     let seconds = Math.floor(dur - (minutes*60));
-    dur = minutes.toString() + ":" + seconds.toString();
+    if(seconds < 10){
+      dur = minutes.toString() + ":0" + seconds.toString();
+    }
+    else{
+      dur = minutes.toString() + ":" + seconds.toString();
+    }
     tra = new Track({
       title: req.body.title,
-      artist: req.body.artist,
-      mp3: filething,
+      artist: user,
       duration: dur,
-      mp364: "",
+      mp364: sixFour,
       upvotes: 0
   });
 
