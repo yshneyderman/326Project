@@ -8,7 +8,9 @@ var Track = db.model("Track", {
     mp364:      String,
     upvotes:    Number,
     comments:   [String],
-    accolades:  [String]
+    accolades:  [String],
+    ratings:    [Number],
+    score:      Number
 });
 
 module.exports = Track;

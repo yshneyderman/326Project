@@ -78,6 +78,28 @@ app.post("/comment", (req, res) => {
   });
 });
 
+app.post("/rate", (req, res) => {
+  let title = req.body.title;
+  Track.findOne({ title : title }, function(err, tracks){
+    tracks.ratings.push(parseInt(req.body.rating));
+    let sum = 0;
+    for(let i = 0; i< tracks.ratings.length; ++i){
+      sum += tracks.ratings[i];
+    }
+    tracks.score = (sum/tracks.ratings.length).toFixed(2);
+    tracks.markModified('ratings');
+    tracks.markModified('score');
+    tracks.save(function () {
+      Track.find((err, tracks) => {
+        let view = { tracks , errormsg : error, user};
+        res.render('track', view);
+        error = '';
+      }).sort({ "upvotes": "desc" });
+    });
+    error = '';
+  });
+});
+
 app.post("/search", (req, res) => {
   let title = req.body.title;  
   if(title === ""){

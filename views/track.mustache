@@ -155,6 +155,9 @@
         .fixed2{
           width: 25px;
         }
+        .fixed3{
+          width: 105px;
+        }
         .flex-item{
           flex-grow: 1;
         }
@@ -168,11 +171,8 @@
       </div>
       <div class="flex-item">
         {{#tracks}}
-        <div class='container' style='color:#ffffff;padding:3px;margin-top:4px;background-color:#353535;border: 1px solid#131313;'><audio id='audio_{{title}}'><source src='data:audio/mp3;base64,{{mp364}}'></audio><div class='fixed' id='play_{{title}}' style='padding:6px; margin-top:10px'><i class='fa fa-play' aria-hidden='true' onclick='playAudio("{{title}}")'></i></div><div class='fixed1' style='padding:6px'><div id='title_{{title}}'>{{title}}</div><div id='artist_{{title}}' style='color:rgb(173, 173, 173)'>{{artist}}</div></div><div class='fixed' style='padding:10px; margin-top:7px'><form id="f{{title}}" method="post" action="/upvote" style='width:18px'>
-    <input type="hidden" name="title" value='{{title}}'><i class="fa fa-heart" aria-hidden="true" onMouseOver="this.style.color='#FF335B'"
-      onMouseOut="this.style.color='white'" onclick="document.getElementById('f{{title}}').submit();"></i></form></div><div class='fixed2' style='padding:10px; margin-top:6px'>  {{upvotes}}</div><div class='fixed1' style='padding:10px;margin-top:6px'><form id="f2{{title}}" method="post" action="/comment">
-    <input type="hidden" name="title" value='{{title}}'><input type="text" name="comment">
-  <input type="submit" value="Comment"></form></div><div class='flex-item' style='padding:15px' align='right'>{{duration}}</div></div>
+        <div class='container' style='color:#ffffff;padding:3px;margin-top:4px;background-color:#353535;border: 1px solid#131313;'><audio id='audio_{{title}}'><source src='data:audio/mp3;base64,{{mp364}}'></audio><div class='fixed' id='play_{{title}}' style='padding:6px; margin-top:10px'><i class='fa fa-play' aria-hidden='true' onclick='playAudio("{{title}}")'></i></div><div class='fixed1' style='padding:6px'><div id='title_{{title}}'>{{title}}</div><div id='artist_{{title}}' style='color:rgb(173, 173, 173)'>{{artist}}</div></div><div class='fixed' style='padding:10px; margin-top:7px'><form id="f{{title}}" method="post" action="/upvote" style='width:18px'><input type="hidden" name="title" value='{{title}}'><i class="fa fa-heart" aria-hidden="true" onMouseOver="this.style.color='#FF335B'"
+      onMouseOut="this.style.color='white'" onclick="document.getElementById('f{{title}}').submit();"></i></form></div><div class='fixed2' style='padding:10px; margin-top:6px'>  {{upvotes}}</div><div class='fixed1' style='padding:10px;margin-top:6px'><form id="f2{{title}}" method="post" action="/comment"><input type="hidden" name="title" value='{{title}}'><input type="text" name="comment"><input type="submit" value="Comment"></form></div><div class='fixed3' style='padding:10px;margin-top:6px'><form id="f3{{title}}" method="post" action="/rate"><input type="hidden" name="title" value='{{title}}'><input type="text" name="rating" style="width:40px"><input type="submit" value="Rate"></form></div><div class='fixed2' style='padding:10px; margin-top:6px'>{{score}}</div><div class='flex-item' style='padding:15px' align='right'>{{duration}}</div></div>
         {{/tracks}}
       </div>
     </div>
