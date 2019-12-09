@@ -62,6 +62,22 @@ app.post("/upvote", (req, res) => {
   });
 });
 
+app.post("/comment", (req, res) => {
+  let title = req.body.title;
+  Track.findOne({ title : title }, function(err, tracks){
+    tracks.comments.push(req.body.comment);
+    tracks.markModified('comments');
+    tracks.save(function () {
+      Track.find((err, tracks) => {
+        let view = { tracks , errormsg : error, user};
+        res.render('track', view);
+        error = '';
+      }).sort({ "upvotes": "desc" });
+    });
+    error = '';
+  });
+});
+
 app.post("/search", (req, res) => {
   let title = req.body.title;  
   if(title === ""){
