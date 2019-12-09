@@ -71,19 +71,14 @@
 
 <h3 id="errormsg">{{errormsg}}</h3>
    
-<h3>Search Track</h3>
-<form method="post" action="/search">
-  Title: <input type="text" name="title">
-  <input type="submit" value="Search">
-</form>
-
-<h3>Delete my Songs</h3>
-<p>Pressing this button will delete all the songs you uploaded.</p>
-<form method="get" action="/remove">  
+<h1>Delete Song</h1>
+<p>Pressing this button will delete the song with this name.</p>
+<form method="post" action="/remove">
+  Title: <input type="text" name="title">  
   <input type="submit" value="Delete">
 </form>
-
-<h2>Your Songs</h1>
+<br>
+<h1>Your Songs</h1>
 <p>Songs you uploaded:</p>
 <div style="padding:20px;margin-top:5px;background-color:#ffffff;">
     

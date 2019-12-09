@@ -317,26 +317,9 @@ app5.get("/", (req, res) => {
   }
 });
 
-app5.post("/search", (req, res) => {
-  let title = req.body.title;  
-  if(title === ""){
-    Track.find({ artist : user }, (err, tracks) => {
-      let view = { tracks , errormsg : error5, user};
-      res.render('account', view);
-      error = '';
-    });
-  }
-  else{
-    Track.find({ title : title, artist : user }, (err, tracks) => {
-      let view = { tracks , errormsg : error5, user};
-      res.render('account', view);
-      error = '';
-    });
-  }
-});
-
-app5.get('/remove', (req, res) => {
-  Track.remove({artist : user}, (err) => {
+app5.post('/remove', (req, res) => {
+  let t = req.body.title;  
+  Track.remove({artist : user, title: t}, (err) => {
     if (err) {
       error = err.errormsg;      
     }
