@@ -109,9 +109,6 @@
   </div>
   <div style="padding:20px;margin-top:30px;background-color:#ffffff;">
 
-
-    <h1>TuneRater Home</h1>
-
     <style>
         .container{
           display:flex;
@@ -125,21 +122,32 @@
         .flex-item{
           flex-grow: 1;
         }
+        #about {
+          text-align: center;
+        }
       </style>
-      
-
-    <!--<p>Here are the top songs!</p>
-    <div id="songs"></div>
-    {{#tracks}}
-    <div class='container' style='color:#ffffff;padding:3px;margin-top:4px;background-color:#353535;border: 1px solid#131313;'><div class='fixed1' style='padding:6px'><div id='title_{{title}}'>{{title}}</div><div id='artist_{{title}}' style='color:rgb(173, 173, 173)'>{{artist}}</div></div><div class='flex-item' style='padding:10px; margin-top:7px'>{{upvotes}}</div><div class='flex-item' style='padding:15px' align='right'>{{duration}}</div></div>
-    {{/tracks}}
-    </div>-->
-    <h1>About</h1>
-    <p>TuneRater is a site made by Musicians, for Musicians.</p>
-    <p>It's creators wanted to make a site where musicians could get real, honest critiques of their music from musicians just like themselves.</p>
-    <p>It's purpose is to give musicians a quick and easy way to get useful feedback on all of their music from anyone around the globe.</p>
-    <p>The Explore page is also a great way to find new music, and leaving comments on someone else's music is really just another way to collaborate!</p>
-    <p>So go Rate some Tunes, and if you're musically inclined, you can upload some tracks of your own!</p>
+    <h1>TuneRater Home</h1>
+    <p>TuneRater's hits!</p>
+    <div class="container" id="songs">
+      <div>
+        <!--<div class="fixed1">Song Info</div>-->
+      </div>
+      <div class="flex-item">
+        {{#tracks}}
+        <div class='container' style='color:#ffffff;padding:3px;margin-top:4px;background-color:#353535;border: 1px solid#131313;'><audio id='audio_{{title}}'><source src='data:audio/mp3;base64,{{mp364}}'></audio><div class='fixed' id='play_{{title}}' style='padding:6px; margin-top:10px'><i class='fa fa-play' aria-hidden='true' onclick='playAudio("{{title}}")'></i></div><div class='fixed1' style='padding:6px'><div id='title_{{title}}'>{{title}}</div><div id='artist_{{title}}' style='color:rgb(173, 173, 173)'>{{artist}}</div></div><div class='fixed' style='padding:10px; margin-top:7px'><form id="f{{title}}" method="post" action="/upvote" style='width:18px'>
+    <input type="hidden" name="title" value='{{title}}'><i class="fa fa-heart" aria-hidden="true" onMouseOver="this.style.color='#FF335B'"
+      onMouseOut="this.style.color='white'" onclick="document.getElementById('f{{title}}').submit();"></i></form></div><div class='fixed2' style='padding:10px; margin-top:6px'>  {{upvotes}}</div><div class='flex-item' style='padding:15px' align='right'>{{duration}}</div></div>
+        {{/tracks}}
+      </div>
+    </div>
+    <div id="about">
+      <h1>About</h1>
+      <p>TuneRater is a site made by Musicians, for Musicians.</p>
+      <p>It's creators wanted to make a site where musicians could get real, honest critiques of their music from musicians just like themselves.</p>
+      <p>It's purpose is to give musicians a quick and easy way to get useful feedback on all of their music from anyone around the globe.</p>
+      <p>The Explore page is also a great way to find new music, and leaving comments on someone else's music is really just another way to collaborate!</p>
+      <p>So go Rate some Tunes, and if you're musically inclined, you can upload some tracks of your own!</p>
+    </div>
 </div>
 </body>
 </html>
