@@ -88,7 +88,7 @@ app.post("/search", (req, res) => {
     }).sort({ "upvotes": "desc" });
   }
   else{
-    Track.find({ title : title }, (err, tracks) => {
+    Track.find({ title : {$regex : ".*"+title+".*"}}, (err, tracks) => {
       let view = { tracks , errormsg : error, user};
       res.render('track', view);
       error = '';
