@@ -6,9 +6,11 @@ TuneRater
 
 A website where aspiring musicians can upload their music and other users can provide ratings, critiques, and suggestions for how they can improve. It features an improved feedback system to have more relevant feedback than YouTube and Spotify.
 
-This is much needed in a world where many artists upload their work to YouTube or Spotify and can't receive any helpful feedback short of internet harassment, likes, or simply getting ignored. On Spotify only celebrity and popular artists get likes and traction and cant get comments. On YouTube it is similar, but comments are often not relevant. This will provide a platform for serious artists to get useful critiques of their music so that they may improve their skills and learn from others and create a community of such work.
+This is much needed in a world where many artists upload their work to YouTube or Spotify and can't receive any helpful feedback short of internet harassment, likes, or simply getting ignored. On Spotify only celebrity and popular artists get likes and traction and cant get comments. On YouTube it is similar, but comments are often not relevant and the audience is meant mostly for entertainment. This will provide a platform for serious artists to get useful critiques of their music so that they may improve their skills and learn from others and create a community of such work.
 
-Our project uses Data Storage (to store music, info, and account info) on MongoDB, a Node.js server to interact with, and very basic user accounts (no encryption so please don't use real passwords).
+Our project uses Data Storage (to store music files, info, and account info) on MongoDB, a Node.js server to interact with (rating, commenting, and sending this info to the database), and very basic user accounts (no encryption so please don't use real passwords).
+
+# The Team
 
 [Yefim Shneyderman](/team/Yefim.md) [GitHub](https://github.com/yshneyderman)
 
