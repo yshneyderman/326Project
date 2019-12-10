@@ -26,6 +26,9 @@ Navigate to the folder where the GitHub repository is stored locally. Copy the p
 Open command prompt and change directory to the copied path:
     *cd C:\Users\Yefim\Desktop\Github Repository\326Project*
 
+You will need to have Node.js and npm installed. Download it [here](https://nodejs.org/en/download/).
+Next in the command prompt you will need to npm install all of the required modules: express, mustache, fs, multer, etc.
+
 Then type the following:
     *npm start*
 

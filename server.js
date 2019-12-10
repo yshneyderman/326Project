@@ -146,7 +146,7 @@ app2.get("/", (req, res) => {
       let view = { tracks , errormsg : error2, user};
       res.render('home', view);
       error = '';
-    });
+    }).sort({ "upvotes": "desc" }).limit(4);
   }
 });
 
