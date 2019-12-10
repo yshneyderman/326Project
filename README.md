@@ -32,9 +32,9 @@ Next in the command prompt you will need to npm install all of the required modu
 Then type the following:
     *npm start*
 
-This will setup the server on port 3000 and print "Running" if all is well.
+This will setup the server on port 3000-3004 and print "Running" if all is well.
 ![cmd](cmd.png)
 
-Then open the browser and navigate to: http://localhost:3000/
+Then open the browser and navigate to: http://localhost:3003/ (anything 3000-3004 works since they redirect to login)
 
 To end the program type Ctrl+c into the command prompt twice.
