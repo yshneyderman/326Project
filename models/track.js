@@ -4,12 +4,13 @@ var db = require("../db");
 var Track = db.model("Track", {
     title:      String,
     artist:     String,
-    mp3:        Buffer,
     duration:   String,
     mp364:      String,
     upvotes:    Number,
     comments:   [String],
-    accolades:  [String]
+    accolades:  [String],
+    ratings:    [Number],
+    score:      Number
 });
 
 module.exports = Track;

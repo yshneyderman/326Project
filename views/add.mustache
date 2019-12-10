@@ -53,6 +53,23 @@
     .active {
       background-color: #0c7c8a;
     }
+
+    .btn {
+      background-color: #0c7c8a;
+      color: white;
+      padding: 15px 20px;
+      border: none;
+      cursor: pointer;
+      width: 230px;
+      height: 50px;
+      opacity: 0.9;
+      font-size: 18px;
+    }
+
+    .btn:hover {
+      opacity: 1;
+    }
+
   </style>
 </head>
 
@@ -60,7 +77,7 @@
 
   <ul>
     <ul>
-    <li><a href="http://localhost:3001/"><img src="https://raw.githubusercontent.com/yshneyderman/326Project/master/TuneRater%20Logo%20Blue.png" height="15" width="30"></a></li>
+    <li><a href="http://localhost:3001/"><img src="https://raw.githubusercontent.com/yshneyderman/326Project/master/TR.png" height="15" width="30"></a></li>
     <li style="float:center"><a href="http://localhost:3000/">Explore</a></li>
     <li style="float:right"><a href="http://localhost:3004/"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;{{user}}</a></li>
     <li class="active" style="float:right"><a href="http://localhost:3002/"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Add Song</a></li>
@@ -71,13 +88,35 @@
 
 <h3 id="errormsg">{{errormsg}}</h3>
 
-<h3>Create Track</h3>
-<form method="post" enctype="multipart/form-data" action="/create">
-  Title: <input type="text" name="title"><br>
-  Artist: <input type="text" name="artist"><br>
-  <input id="audio-file" name="mp3" type="file" />
-  <input type="submit" value="Save">
-</form>
+<h1>Add Song</h3>
+<div>
+  <p>Remember that all songs must be your own work. <br> Uploading work that doesn't belong to you is against site policy and will be removed.</p>
+  <br><br>
+</div>
+<div align="center">
+  <div style="width:400px;border: 1px solid #dedede;">
+  <br>
+    <form method="post" enctype="multipart/form-data" action="/create">
+      <div align="center">
+        <div align="left" style="width:230px">
+          Title: <input type="text" name="title" required style='border: 1px solid #dedede;background-color:#f2f2f2;color:black;width: 170px; height: 20px; padding: 3px 3px;font-size: 12px;'><br>
+          Description: <input type="text" name="desc" style='border: 1px solid #dedede;background-color:#f2f2f2;color:black;width: 120px; height: 20px; padding: 3px 3px;font-size: 12px;'><br>
+        </div>
+        <div>
+        <br>
+      </div align="center" style="width:230px;">
+        <input id="audio-file" name="mp3" type="file" required>
+      </div>
+      <div>
+        <br><br>
+      </div>
+      <div align="center">
+        <input class='btn' type="submit" value="Upload">
+      </div>
+    </form>
+    <br>
+  </div>
+</div>
 </body>
 </html>
 

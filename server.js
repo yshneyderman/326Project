@@ -39,9 +39,6 @@ app.get("/", (req, res) => {
   }
   else{
     Track.find((err, tracks) => {
-      for(let i =0; i< tracks.length; ++i){
-        tracks[i].mp364 = tracks[i].mp3.toString('base64');
-      }
       let view = { tracks , errormsg : error, user};
       res.render('track', view);
       error = '';
@@ -56,9 +53,44 @@ app.post("/upvote", (req, res) => {
     tracks.markModified('upvotes');
     tracks.save(function () {
       Track.find((err, tracks) => {
-        for(let i =0; i< tracks.length; ++i){
-          tracks[i].mp364 = tracks[i].mp3.toString('base64');
-        }
+        let view = { tracks , errormsg : error, user};
+        res.render('track', view);
+        error = '';
+      }).sort({ "upvotes": "desc" });
+    });
+    error = '';
+  });
+});
+
+app.post("/comment", (req, res) => {
+  let title = req.body.title;
+  Track.findOne({ title : title }, function(err, tracks){
+    tracks.comments.push(req.body.comment);
+    tracks.markModified('comments');
+    tracks.save(function () {
+      Track.find((err, tracks) => {
+        let view = { tracks , errormsg : error, user};
+        res.render('track', view);
+        error = '';
+      }).sort({ "upvotes": "desc" });
+    });
+    error = '';
+  });
+});
+
+app.post("/rate", (req, res) => {
+  let title = req.body.title;
+  Track.findOne({ title : title }, function(err, tracks){
+    tracks.ratings.push(parseInt(req.body.rating));
+    let sum = 0;
+    for(let i = 0; i< tracks.ratings.length; ++i){
+      sum += tracks.ratings[i];
+    }
+    tracks.score = (sum/tracks.ratings.length).toFixed(2);
+    tracks.markModified('ratings');
+    tracks.markModified('score');
+    tracks.save(function () {
+      Track.find((err, tracks) => {
         let view = { tracks , errormsg : error, user};
         res.render('track', view);
         error = '';
@@ -78,7 +110,7 @@ app.post("/search", (req, res) => {
     }).sort({ "upvotes": "desc" });
   }
   else{
-    Track.find({ title : title }, (err, tracks) => {
+    Track.find({ title : {$regex : ".*"+title+".*"}}, (err, tracks) => {
       let view = { tracks , errormsg : error, user};
       res.render('track', view);
       error = '';
@@ -143,20 +175,24 @@ app3.post("/create", upload.single('mp3'), (req, res, next) => {
   let loc = 'uploads/' + req.file.filename;
   var filething = fs.readFileSync(loc);
   let dur = 0;
+  let sixFour = filething.toString('base64');
   mm.parseBuffer(filething, 'audio/mp3')
   .then( metadata => {
     util.inspect(metadata, { showHidden: false, depth: null });
     dur = Math.floor(metadata.format.duration);
-    console.log(metadata);
     let minutes = Math.floor(dur/60);
     let seconds = Math.floor(dur - (minutes*60));
-    dur = minutes.toString() + ":" + seconds.toString();
+    if(seconds < 10){
+      dur = minutes.toString() + ":0" + seconds.toString();
+    }
+    else{
+      dur = minutes.toString() + ":" + seconds.toString();
+    }
     tra = new Track({
       title: req.body.title,
-      artist: req.body.artist,
-      mp3: filething,
+      artist: user,
       duration: dur,
-      mp364: "",
+      mp364: sixFour,
       upvotes: 0
   });
 
@@ -319,26 +355,9 @@ app5.get("/", (req, res) => {
   }
 });
 
-app5.post("/search", (req, res) => {
-  let title = req.body.title;  
-  if(title === ""){
-    Track.find({ artist : user }, (err, tracks) => {
-      let view = { tracks , errormsg : error5, user};
-      res.render('account', view);
-      error = '';
-    });
-  }
-  else{
-    Track.find({ title : title, artist : user }, (err, tracks) => {
-      let view = { tracks , errormsg : error5, user};
-      res.render('account', view);
-      error = '';
-    });
-  }
-});
-
-app5.get('/remove', (req, res) => {
-  Track.remove({artist : user}, (err) => {
+app5.post('/remove', (req, res) => {
+  let t = req.body.title;  
+  Track.remove({artist : user, title: t}, (err) => {
     if (err) {
       error = err.errormsg;      
     }
