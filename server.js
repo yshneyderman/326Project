@@ -81,22 +81,31 @@ app.post("/comment", (req, res) => {
 app.post("/rate", (req, res) => {
   let title = req.body.title;
   Track.findOne({ title : title }, function(err, tracks){
-    tracks.ratings.push(parseInt(req.body.rating));
-    let sum = 0;
-    for(let i = 0; i< tracks.ratings.length; ++i){
-      sum += tracks.ratings[i];
+    if(!isNaN(req.body.rating) && req.body.rating >= 0 && req.body.rating <= 5){
+      tracks.ratings.push(parseInt(req.body.rating));
+      let sum = 0;
+      for(let i = 0; i< tracks.ratings.length; ++i){
+        sum += tracks.ratings[i];
+      }
+      tracks.score = (sum/tracks.ratings.length).toFixed(2);
+      tracks.markModified('ratings');
+      tracks.markModified('score');
+      tracks.save(function () {
+        Track.find((err, tracks) => {
+          let view = { tracks , errormsg : error, user};
+          res.render('track', view);
+          error = '';
+        }).sort({ "upvotes": "desc" });
+      });
+      error = '';
     }
-    tracks.score = (sum/tracks.ratings.length).toFixed(2);
-    tracks.markModified('ratings');
-    tracks.markModified('score');
-    tracks.save(function () {
+    else{
       Track.find((err, tracks) => {
         let view = { tracks , errormsg : error, user};
         res.render('track', view);
         error = '';
       }).sort({ "upvotes": "desc" });
-    });
-    error = '';
+    }
   });
 });
 
@@ -363,6 +372,11 @@ app5.post('/remove', (req, res) => {
     }
     res.redirect('/');
   });
+});
+
+app5.post('/logout', (req, res) => {
+  user = "Admin";
+  res.redirect("http://localhost:3003");
 });
 
 app5.listen(3004, () => {
