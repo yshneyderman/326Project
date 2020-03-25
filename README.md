@@ -3,7 +3,7 @@ The Buffaloos
 Team 24 Project
 
 TuneRater
-Demo:https://www.youtube.com/watch?v=75RgAww9FH4
+Demo: https://www.youtube.com/watch?v=75RgAww9FH4
 
 A website where aspiring musicians can upload their music and other users can provide ratings, critiques, and suggestions for how they can improve. It features an improved feedback system to have more relevant feedback than YouTube and Spotify.
 
